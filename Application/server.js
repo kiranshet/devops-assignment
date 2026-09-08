@@ -9,6 +9,7 @@ app.get("/", (req, res) => {
   res.json({
     application: "DevOps Assignment API",
     status: "running",
+    version: "v2",
     environment: process.env.NODE_ENV || "development"
   });
 });
