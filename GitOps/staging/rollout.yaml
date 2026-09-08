@@ -53,26 +53,25 @@ spec:
             periodSeconds: 15
 
   strategy:
-    canary:
-      canaryService: devops-assignment-api-canary
-      stableService: devops-assignment-api
+  canary:
+    canaryService: devops-assignment-api-canary
+    stableService: devops-assignment-api
 
-      trafficRouting:
-        istio:
-          virtualService:
-            name: devops-assignment-api
+    trafficRouting:
+      istio:
+        virtualService:
+          name: devops-assignment-api
+          routes:
+            - api
 
-      steps:
-        - setWeight: 10
-        - pause:
-            duration: 2m
-
-        - setWeight: 25
-        - pause:
-            duration: 2m
-
-        - setWeight: 50
-        - pause:
-            duration: 5m
-
-        - setWeight: 100
+    steps:
+      - setWeight: 10
+      - pause:
+          duration: 2m
+      - setWeight: 25
+      - pause:
+          duration: 2m
+      - setWeight: 50
+      - pause:
+          duration: 5m
+      - setWeight: 100
