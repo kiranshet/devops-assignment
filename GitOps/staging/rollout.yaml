@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: 620893829052.dkr.ecr.ap-south-1.amazonaws.com/devops-assignment-dev-api:762b9837806333bd32578e5e74763cd2eb16d0e1
+          image: 620893829052.dkr.ecr.ap-south-1.amazonaws.com/devops-assignment-dev-api:9c015553a893c6b5b8fc4fda86f0896e36ff84c2
           imagePullPolicy: IfNotPresent
 
           ports:
