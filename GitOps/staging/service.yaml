@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-assignment-api
+  namespace: devops-assignment
+spec:
+  selector:
+    app: devops-assignment-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-assignment-api-canary
+  namespace: devops-assignment
+spec:
+  selector:
+    app: devops-assignment-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

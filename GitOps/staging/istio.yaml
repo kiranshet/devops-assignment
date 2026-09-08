@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: devops-assignment-api
+  namespace: devops-assignment
+spec:
+  hosts:
+    - devops-assignment-api
+  gateways:
+    - mesh
+  http:
+    - name: api
+      route:
+        - destination:
+            host: devops-assignment-api
+            port:
+              number: 80
+          weight: 100
+        - destination:
+            host: devops-assignment-api-canary
+            port:
+              number: 80
+          weight: 0

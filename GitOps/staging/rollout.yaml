@@ -1,0 +1,78 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: devops-assignment-api
+  namespace: devops-assignment
+spec:
+  replicas: 2
+
+  revisionHistoryLimit: 3
+
+  selector:
+    matchLabels:
+      app: devops-assignment-api
+
+  template:
+    metadata:
+      labels:
+        app: devops-assignment-api
+    spec:
+      containers:
+        - name: api
+          image: 620893829052.dkr.ecr.ap-south-1.amazonaws.com/devops-assignment-dev-api:REPLACE_WITH_SHA
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+
+          env:
+            - name: NODE_ENV
+              value: "staging"
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+
+  strategy:
+    canary:
+      canaryService: devops-assignment-api-canary
+      stableService: devops-assignment-api
+
+      trafficRouting:
+        istio:
+          virtualService:
+            name: devops-assignment-api
+
+      steps:
+        - setWeight: 10
+        - pause:
+            duration: 2m
+
+        - setWeight: 25
+        - pause:
+            duration: 2m
+
+        - setWeight: 50
+        - pause:
+            duration: 5m
+
+        - setWeight: 100
