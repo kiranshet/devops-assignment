@@ -5,9 +5,11 @@ metadata:
   namespace: devops-assignment
 spec:
   hosts:
-    - devops-assignment-api
+    - "*"
+
   gateways:
-    - mesh
+    - devops-assignment-api-gateway
+
   http:
     - name: api
       route:
@@ -16,6 +18,7 @@ spec:
             port:
               number: 80
           weight: 100
+
         - destination:
             host: devops-assignment-api-canary
             port:

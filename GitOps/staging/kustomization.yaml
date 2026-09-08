@@ -7,4 +7,5 @@ resources:
   - namespace.yaml
   - rollout.yaml
   - service.yaml
+  - gateway.yaml
   - istio.yaml
