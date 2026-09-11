@@ -20,6 +20,8 @@ Thumbs.db
 __pycache__/
 *.pyc
 
+test-upload/
+
 # IDE
 .vscode/
 .idea/
